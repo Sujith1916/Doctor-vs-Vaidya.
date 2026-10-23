@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doctor vs Vaidya</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f6fc;
+            margin: 0;
+            padding: 0;
+            color: #243047;
+        }
+
+        header {
+            background-color: #173b63;
+            color: white;
+            text-align: center;
+            padding: 28px 15px;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 25px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 22px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .card h2 {
+            color: #173b63;
+            margin-top: 0;
+        }
+
+        .notice {
+            background-color: #fff5dc;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #176b55;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    background-color: #125440;
+}
+
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #65738a;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Doctor vs Vaidya</h1>
+        <p>Medical Record Comparison Prototype</p>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Welcome</h2>
+            <p>
+                Compare documented medical terms and medicine names
+                from Allopathy, Ayurveda, and Homeopathy records.
+            </p>
+        </section>
+
+<section class="card">
+    <h2>About This Project</h2>
+
+    <p>
+        This platform helps users organize and compare
+        information recorded in different medical systems.
+    </p>
+
+    <p>
+        <strong>Important Disclaimer:</strong>
+        This prototype is for medical terminology comparison
+        and educational purposes only. The displayed mappings
+        may be incomplete or unverified. They do not establish
+        clinical equivalence and must not be used to diagnose
+        conditions, select treatments, or replace advice from
+        a qualified healthcare professional.
+    </p>
+
+    <div class="notice">
+        <strong>Important:</strong> Text similarities do not
+        establish clinical equivalence. This prototype does
+        not diagnose diseases or recommend treatments.
+    </div>
+</section>
+
+<section class="card">
+    <h2>Add Medical Record</h2>
+
+
+    <p>Enter the details from a fictional or anonymized medical record.</p>
+
+    <form id="recordForm">
+
+        <label for="patientReference">Patient Reference</label>
+        <input type="text" id="patientReference"
+               placeholder="Example: DEMO004" required>
+
+        <label for="medicalSystem">Medical System</label>
+        <select id="medicalSystem" required>
+            <option value="allopathy">Allopathy</option>
+            <option value="ayurveda">Ayurveda</option>
+            <option value="homeopathy">Homeopathy</option>
+        </select>
+
+        <label for="recordType">Record Type</label>
+        <select id="recordType" required>
+            <option value="prescription">Prescription</option>
+            <option value="ehr">Electronic Health Record (EHR)</option>
+        </select>
+<div class="form-group">
+    <label for="prescriptionImage">
+        Upload Prescription / Medical Record Photo
+    </label>
+
+    <input
+        type="file"
+        id="prescriptionImage"
+        accept="image/png, image/jpeg"
+    >
+
+    <p>
+        Select a JPG or PNG image of your medical record.
+    </p>
+</div>
+
+
+        <label for="conditionTerms">Condition Terms</label>
+        <textarea id="conditionTerms"
+                  placeholder="Enter one term per line"
+                  rows="3"></textarea>
+
+        <label for="medicines">Medicine Names</label>
+        <textarea id="medicines"
+                  placeholder="Enter one medicine name per line"
+                  rows="3"></textarea>
+
+        <label for="notes">Notes</label>
+        <textarea id="notes"
+                  placeholder="Optional notes"
+                  rows="3"></textarea>
+
+        <button type="submit">Save Medical Record</button>
+
+        <p id="formMessage" role="status"></p>
+
+    </form>
+</section>
+
+<section class="card">
+    <h2>Find Equivalent Medical Terms</h2>
+
+    <p>
+        Enter a medical term from one system to search for
+        corresponding documented terms in the other systems.
+    </p>
+
+    <label for="sourceSystem">Source Medical System</label>
+    <select id="sourceSystem">
+        <option value="allopathy">Allopathy</option>
+        <option value="ayurveda">Ayurveda</option>
+        <option value="homeopathy">Homeopathy</option>
+    </select>
+
+    <label for="sourceTerm">Medical Term</label>
+    <input
+        type="text"
+        id="sourceTerm"
+        placeholder="Example: diabetes"
+    >
+
+    <button type="button" id="findEquivalentsButton">
+        Find Corresponding Terms
+    </button>
+
+    <div id="equivalentResults"></div>
+</section>
+
+
+
+       
+
+         
+<section class="card">
+    <h2>Patient Medical Records</h2>
+
+    <div class="form-group">
+        <label for="historyPatientId">Patient ID</label>
+        <input
+            type="text"
+            id="historyPatientId"
+            placeholder="Enter patient ID, e.g. P1001"
+        >
+    </div>
+
+    <button type="button" id="loadRecordsButton">
+        View Previous Records
+    </button>
+
+    <div id="recordsContainer">
+        <p>Enter a patient ID to view their records.</p>
+    </div>
+
+    <hr>
+
+    <h3>Compare Two Medical Records</h3>
+
+    <div class="form-group">
+        <label for="recordId1">First Record ID</label>
+        <input
+            type="number"
+            id="recordId1"
+            min="1"
+            placeholder="e.g. 1"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="recordId2">Second Record ID</label>
+        <input
+            type="number"
+            id="recordId2"
+            min="1"
+            placeholder="e.g. 2"
+        >
+    </div>
+
+    <button type="button" id="compareRecordsButton">
+        Compare Records
+    </button>
+
+    <div id="comparisonContainer">
+        <p>Select two record IDs to compare.</p>
+    </div>
+</section>
+
+    </main>
+
+    <footer>
+        Academic Prototype | Doctor vs Vaidya
+    </footer>
+
+    <script>
+        const form = document.getElementById("recordForm");
+        const formMessage = document.getElementById("formMessage");
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            formMessage.textContent = "Saving record...";
+
+            const record = {
+                patient_reference:
+                    document.getElementById("patientReference").value.trim(),
+
+                medical_system:
+                    document.getElementById("medicalSystem").value,
+
+                record_type:
+                    document.getElementById("recordType").value,
+
+                condition_terms:
+                    document.getElementById("conditionTerms").value
+                        .split("\n")
+                        .map(term => term.trim())
+                        .filter(term => term !== ""),
+
+                medicines:
+                    document.getElementById("medicines").value
+                        .split("\n")
+                        .map(medicine => medicine.trim())
+                        .filter(medicine => medicine !== ""),
+
+                notes:
+                    document.getElementById("notes").value.trim() || null
+            };
+
+            try {
+                const response = await fetch(
+                    "http://127.0.0.1:8000/api/records",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(record)
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        result.detail
+                            ? JSON.stringify(result.detail)
+                            : "Could not save the record."
+                    );
+                }
+
+                formMessage.textContent =
+                    "Success! Record saved. Record ID: " + result.record_id;
+
+                form.reset();
+
+            } catch (error) {
+                formMessage.textContent =
+                    "Error: " + error.message +
+                    ". Check that the backend server is running.";
+            }
+        });
+
+        const loadRecordsButton =
+            document.getElementById("loadRecordsButton");
+
+        const recordsContainer =
+            document.getElementById("recordsContainer");
+
+        loadRecordsButton.addEventListener("click", async function () {
+            recordsContainer.textContent = "Loading records...";
+
+            try {
+                const response = await fetch(
+                    "http://127.0.0.1:8000/api/records"
+                );
+
+                if (!response.ok) {
+                    throw new Error("Could not load records.");
+                }
+
+                const result = await response.json();
+
+                recordsContainer.innerHTML = "";
+
+                if (result.records.length === 0) {
+                    recordsContainer.textContent =
+                        "No medical records have been saved yet.";
+                    return;
+                }
+
+                result.records.forEach(function (record) {
+                    const card = document.createElement("div");
+
+                    card.style.border = "1px solid #cbd5e1";
+                    card.style.borderRadius = "8px";
+                    card.style.padding = "15px";
+                    card.style.marginTop = "15px";
+
+                    const heading = document.createElement("h3");
+                    heading.textContent = "Record ID: " + record.id;
+                    card.appendChild(heading);
+
+                    const details = [
+                        ["Patient Reference", record.patient_reference],
+                        ["Medical System", record.medical_system],
+                        ["Record Type", record.record_type],
+                        ["Condition Terms", record.condition_terms.join(", ") || "None entered"],
+                        ["Medicine Names", record.medicines.join(", ") || "None entered"],
+                        ["Notes", record.notes || "None"]
+                    ];
+
+                    details.forEach(function (detail) {
+                        const paragraph = document.createElement("p");
+                        paragraph.textContent =
+                            detail[0] + ": " + detail[1];
+                        card.appendChild(paragraph);
+                    });
+
+                    recordsContainer.appendChild(card);
+                });
+
+            } catch (error) {
+                recordsContainer.textContent =
+                    "Error loading records: " + error.message;
+            }
+        });
+
+document.getElementById("findEquivalentsButton").addEventListener("click", async function () {
+    const system = document.getElementById("sourceSystem").value;
+    const term = document.getElementById("sourceTerm").value.trim();
+    const resultsDiv = document.getElementById("equivalentResults");
+
+    resultsDiv.textContent = "";
+
+    if (!term) {
+        resultsDiv.textContent = "Please enter a medical term.";
+        return;
+    }
+
+    resultsDiv.textContent = "Searching...";
+
+    try {
+        const url =
+            `http://127.0.0.1:8000/api/terminology/search?system=${encodeURIComponent(system)}&term=${encodeURIComponent(term)}`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        resultsDiv.textContent = "";
+
+        if (!response.ok) {
+            resultsDiv.textContent = data.detail || "Search failed.";
+            return;
+        }
+
+        const heading = document.createElement("h3");
+        heading.textContent = "Search Results";
+        resultsDiv.appendChild(heading);
+
+        const message = document.createElement("p");
+        message.textContent = data.message;
+        resultsDiv.appendChild(message);
+
+        if (data.results.length === 0) {
+            const noResults = document.createElement("p");
+            noResults.textContent =
+                "No mapping is currently entered for this term. This does not mean that no equivalent exists.";
+            resultsDiv.appendChild(noResults);
+            return;
+        }
+
+        data.results.forEach(function (item) {
+            const concept = document.createElement("p");
+            concept.textContent = "Concept: " + item.concept;
+            resultsDiv.appendChild(concept);
+
+            for (const [systemName, terms] of Object.entries(item.matches)) {
+                const result = document.createElement("p");
+                const displayTerms = terms.length ? terms.join(", ") : "No mapping entered";
+                result.textContent = systemName + ": " + displayTerms;
+                resultsDiv.appendChild(result);
+            }
+
+            const status = document.createElement("p");
+           status.textContent =
+    "Verification Status: " +
+    (item.relationship === "needs_verification"
+        ? "Pending verification"
+        : item.relationship);
+            resultsDiv.appendChild(status);
+        });
+    } catch (error) {
+        resultsDiv.textContent =
+            "Could not connect to the backend. Make sure the FastAPI server is running.";
+    }
+});
+
+
+document.getElementById("compareRecordsButton").addEventListener("click", async function () {
+    const id1 = document.getElementById("recordId1").value;
+    const id2 = document.getElementById("recordId2").value;
+    const output = document.getElementById("comparisonContainer");
+
+    output.textContent = "";
+
+    if (!id1 || !id2) {
+        output.textContent = "Please enter both Record IDs.";
+        return;
+    }
+
+    if (id1 === id2) {
+        output.textContent = "Please enter two different Record IDs.";
+        return;
+    }
+
+    output.textContent = "Comparing records...";
+
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/compare/" +
+            encodeURIComponent(id1) + "/" +
+            encodeURIComponent(id2)
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                typeof data.detail === "string"
+                    ? data.detail
+                    : JSON.stringify(data.detail || "Comparison failed.")
+            );
+        }
+
+        output.textContent = "";
+
+       
+function addSection(title, text) {
+    const heading = document.createElement("h3");
+    heading.textContent = title;
+    output.appendChild(heading);
+
+    const paragraph = document.createElement("p");
+    paragraph.style.whiteSpace = "pre-wrap";
+    paragraph.textContent = text || "No comparison available.";
+    output.appendChild(paragraph);
+}
+
+
+       
+       addSection("AI Medical Record Comparison", data.ai_comparison);
+    } catch (error) {
+        output.textContent = "Error: " + error.message;
+    }
+});
+
+
+    </script>
+</body>
+</html>
+
