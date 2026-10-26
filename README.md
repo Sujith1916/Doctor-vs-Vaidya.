@@ -1,110 +1,221 @@
-# Doctor vs Vaidya 🩺🌿 (Gemini AI Edition)
-### Allopathic vs Ayurvedic Prescription Comparator
+# Doctor vs Vaidya 🩺🌿
+### Cross-System Medical Record Comparison Platform
 
-An intelligent clinical pharmacology & Ayurveda comparison tool powered by **Google Gemini API**, **FastAPI**, **Uvicorn**, and managed with **uv**.
+## Overview
 
----
+Doctor vs Vaidya is a web-based prototype designed to help users understand and compare medical records from Allopathy, Ayurveda, and Homeopathy. The platform accepts structured medical information through text input and provides functionality to store, retrieve, summarize, and compare records.
 
-## 🌟 Overview
+Using Python, FastAPI, SQLite, terminology mapping, and Google Gemini AI, the system generates informational comparisons that highlight similarities, differences, and missing information across selected medical records.
 
-**Doctor vs Vaidya** takes an **Allopathic prescription** (Modern Medicine) and an **Ayurvedic prescription** (Classical Medicine) and uses **Google Gemini AI** to generate a real-time, dynamic **Difference Table** comparing them across 9 clinical and pharmacological dimensions.
+The project is intended for educational and informational purposes only. It does not provide diagnoses, prescribe treatments, or establish clinical equivalence between different healthcare systems.
 
----
+## Key Features
 
-## 🔑 Gemini API Key Configuration
+- **Medical Record Management:** Save and retrieve medical records containing patient references, medical systems, conditions, medicines, and notes.
+- **Multiple Healthcare Systems:** Supports records associated with Allopathy, Ayurveda, and Homeopathy.
+- **Terminology Search:** Find possible related terms across healthcare systems using demonstration terminology mappings.
+- **AI-Assisted Comparison:** Use Google Gemini AI to compare two medical records and generate a structured explanation.
+- **Record Retrieval:** Retrieve individual records, view all saved records, and retrieve records associated with a patient reference.
+- **Patient Record Separation:** Prevent comparisons between records belonging to different patient references.
+- **REST API:** Provide endpoints for communication between the frontend and backend.
+- **Interactive API Documentation:** Test available endpoints using FastAPI Swagger UI.
 
-The application supports setting the Gemini API key through any of the following methods:
+## Technology Stack
 
-1. **In the Web UI Dashboard (Easiest)**: Click the **"Gemini API Key"** button in the top navigation bar and enter your key. It is saved in your browser's `localStorage` and sent with requests.
-2. **Environment Variable**:
-   ```bash
-   export GEMINI_API_KEY="your-gemini-api-key"
-   ```
-3. **`.env` File**: Create a `.env` file in the project root:
-   ```env
-   GEMINI_API_KEY=your-gemini-api-key
-   GEMINI_MODEL=gemini-2.5-flash
-   ```
+| Component | Technology |
+|---|---|
+| Frontend | HTML, CSS, JavaScript |
+| Backend | Python, FastAPI |
+| ASGI Server | Uvicorn |
+| Database | SQLite |
+| Data Validation | Pydantic |
+| AI Integration | Google Gemini API |
+| Python SDK | `google-genai` |
+| Environment Configuration | `python-dotenv` |
+| API Testing | FastAPI Swagger UI |
+| Version Control | Git and GitHub |
 
-*(Get a free API key at [Google AI Studio](https://aistudio.google.com/app/apikey)).*
+## Project Structure
 
----
-
-## 🔬 9-Point Predefined Comparison Matrix
-
-1. **Active Ingredients & Composition**: Synthetic single-molecule chemical salts (APIs) vs. botanical & herbo-mineral phytocomplexes.
-2. **Description & Pharmacological Mechanism**: Targeted receptor/enzyme inhibition (e.g. AMPK, AT1 blockers, PPIs, COX inhibitors) vs. Tridosha balancing (Vata/Pitta/Kapha), Agni enhancement, and Ama detoxification.
-3. **Therapeutic Philosophy**: Acute symptom suppression & biomarker normalization vs. Root-cause elimination (Nidan Parivarjan) and systemic tissue rejuvenation (Rasayana).
-4. **Onset of Action & Timeline**: Rapid/immediate biochemical control vs. Progressive, gradual, and sustainable metabolic resetting.
-5. **Side Effects & Organ Safety Profile**: Hepatic/renal load, tolerance, and GI risks vs. Shodhana-purified, organ-protective classical formulations.
-6. **Administration & Carrier Medium (Anupana)**: Plain water oral intake vs. Synergistic bio-enhancing vehicles (Anupanas: honey, warm milk, ghee, herbal decoctions).
-7. **Dietary & Lifestyle Regimen (Pathya / Apathya)**: Advisory nutritional guidelines vs. Rigorous personalized Ayurvedic dietary and circadian protocols (Dinacharya).
-8. **Evidence Base & Regulatory Standards**: FDA/CDSCO multi-center randomized controlled trials (RCTs) vs. Classical Ayurvedic Samhitas (Charaka, Sushruta, Vagbhata) & Ayurvedic Pharmacopoeia of India (API).
-9. **Optimal Clinical Suitability & Role**: Critical for acute emergencies and severe exacerbations vs. Chronic lifestyle management, prevention, and long-term vitality.
-
----
-
-## ⚡ Key Features
-
-- **Dynamic Gemini AI Generation**: Prescriptions are dynamically evaluated using Gemini with structured JSON output, eliminating hardcoded limitations.
-- **Dual Prescription Inputs**: Dedicated input cards for Allopathy (Doctor) and Ayurveda (Vaidya) with real-time item counters.
-- **1-Click Test Presets**: Ready-to-use clinical presets for Diabetes, Hypertension, GERD, Osteoarthritis, Insomnia, Bronchitis, and Cholesterol.
-- **Herb-Drug Interaction Safety Engine**: Automatically detects and flags critical clashes (e.g. Hypoglycemia risk with Metformin + Bitter Melon, hypotensive collapse with Telmisartan + Sarpagandha, additive sedation with Zolpidem + Tagara).
-- **Parsed Medication Breakdown Cards**: Visual cards displaying active constituents, mechanisms, and carrier media for each parsed medicine.
-- **Integrated Clinical Verdict**: Pragmatic synthesis guiding safe multi-therapy, timing separations (1–2 hour rule), and physician coordination.
-- **Export & Share**: One-click Print/PDF export and clipboard copy.
-
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-- Python 3.10+
-- [`uv`](https://docs.astral.sh/uv/) (or standard Python)
-
-### 2. Running with `uv`
-
-```bash
-# Run using uv
-uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```text
+doctor-vs-vaidya/
+├── main.py
+├── database.py
+├── models.py
+├── terminology.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+├── frontend/
+│   └── index.html
+├── .env                 # Local only; never commit
+├── medical_records.db   # Local database
+└── .venv/               # Python virtual environment
 ```
 
-Or run via Python directly:
-```bash
-python main.py
+The structure above represents the original backend version. Keep any additional files required by your actual working setup.
+
+## Prerequisites
+
+- Python 3.10 or later
+- pip
+- A Google Gemini API key for AI-assisted comparison
+- A modern web browser
+- Visual Studio Code (recommended)
+
+## Installation and Setup
+
+### 1. Open the project directory
+
+```powershell
+cd C:\Users\SUJITH\Documents\doctor-vs-vaidya
 ```
 
-### 3. Accessing the Application
-- **Web UI Dashboard**: [http://localhost:8000](http://localhost:8000)
-- **FastAPI Interactive Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+### 2. Activate the virtual environment
 
----
+On Windows PowerShell:
 
-## 📡 API Endpoints
+```powershell
+.venv\Scripts\Activate.ps1
+```
 
-### `POST /api/compare`
-Compares an Allopathic prescription and an Ayurvedic prescription using Gemini AI.
+If PowerShell blocks activation, use Command Prompt:
 
-**Headers:**
-- `x-gemini-api-key` *(optional if set in env/backend)*: Your Google Gemini API Key
+```cmd
+.venv\Scripts\activate.bat
+```
 
-**Request Payload:**
+### 3. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 4. Configure the Gemini API key
+
+Create a `.env` file in the project root if it does not already exist:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+Replace the placeholder with your own API key. Never publish the key or commit the `.env` file to GitHub.
+
+### 5. Start the backend
+
+```bash
+python -m uvicorn main:app --reload
+```
+
+Keep the terminal open while using the application.
+
+## Accessing the Application
+
+- **Web application:** http://127.0.0.1:8000/
+- **Interactive API documentation:** http://127.0.0.1:8000/docs
+- **Backend health check:** http://127.0.0.1:8000/api/health
+
+These local addresses work while the backend server is running on your computer.
+
+## API Endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/` | Check the backend homepage |
+| GET | `/api/health` | Check backend health |
+| GET | `/api/terminology/search` | Search terminology mappings |
+| POST | `/api/records` | Create a medical record |
+| GET | `/api/records` | Retrieve all saved records |
+| GET | `/api/records/{record_id}` | Retrieve one record |
+| GET | `/api/patients/{patient_id}/records` | Retrieve records associated with a patient reference |
+| GET | `/api/compare/{record_id_1}/{record_id_2}` | Compare two records using AI |
+
+### Example: Create a Medical Record
+
+Send a `POST` request to `/api/records` with JSON similar to:
+
 ```json
 {
-  "allopathic": {
-    "text": "Tab. Metformin HCl 500 mg BD\nTab. Glimepiride 1 mg OD",
-    "notes": "Advised HbA1c monitoring every 3 months"
-  },
-  "ayurvedic": {
-    "text": "Madhumehantak Churna 3g BD with warm water\nNisha Amalaki 2 tabs BD",
-    "notes": "Pathya: Barley (Yava), Bitter Gourd"
-  },
-  "api_key": "optional-api-key-here"
+  "patient_reference": "PAT001",
+  "medical_system": "allopathy",
+  "record_type": "prescription",
+  "condition_terms": ["Example condition"],
+  "medicines": ["Example medicine"],
+  "notes": "Example notes"
 }
 ```
 
-### `GET /api/presets`
-Returns all curated clinical test case presets.
+This is an illustrative request. Use the field names and allowed values defined in the current `models.py` file.
 
-### `GET /api/health`
-Returns health check status and whether Gemini API key is configured on server.
+### Example: Search Terminology
+
+Send a `GET` request to:
+
+```text
+/api/terminology/search?system=allopathy&term=diabetes
+```
+
+The response contains the source term, source medical system, and any available demonstration mappings.
+
+### Example: Compare Records
+
+Send a `GET` request using the IDs of two saved records:
+
+```text
+/api/compare/1/2
+```
+
+Both records must exist and belong to the same patient reference. The response includes an AI-generated informational comparison, subject to successful Gemini API access.
+
+## Database
+
+The project uses SQLite to store medical records locally. The database contains structured information such as patient references, medical systems, record types, condition terms, medicines, and notes.
+
+The database connection and initialization are handled by `database.py`. The data model and validation rules are defined in `models.py`.
+
+## AI-Assisted Comparison
+
+The Gemini integration generates a readable comparison of two selected records. It is designed to highlight:
+
+1. A summary of each record.
+2. Similarities in recorded condition terms.
+3. Differences in recorded condition terms.
+4. Similarities and differences in medicine names.
+5. Missing information and uncertainties.
+
+The AI output depends on the supplied records and successful API access. It must not be treated as a verified clinical assessment.
+
+## Limitations and Safety
+
+- Terminology mappings are demonstration mappings and require independent verification.
+- Similar terminology does not prove that two conditions, medicines, or treatments are clinically equivalent.
+- AI-generated comparisons may contain errors or omissions.
+- The prototype does not diagnose diseases or recommend, initiate, stop, or change treatment.
+- Uploaded-photo text extraction (OCR) and automatic EHR import are not documented as implemented features in this version.
+- Medical information should be reviewed by a qualified healthcare professional before being used for clinical decisions.
+- Use appropriate privacy safeguards when handling patient information.
+
+## Future Enhancements
+
+- Add reliable prescription-photo upload and OCR.
+- Support importing records from different EHR formats.
+- Integrate verified terminology resources.
+- Improve patient-specific record filtering and access controls.
+- Add structured comparison reports and PDF export.
+- Expand automated testing and deployment support.
+
+## Running Tests
+
+Start the backend and open:
+
+http://127.0.0.1:8000/docs
+
+Use the interactive documentation to test the available endpoints with sample data. Confirm that record creation, retrieval, terminology search, and AI comparison work correctly in the current environment.
+
+## License
+
+No license has been specified yet. Add an appropriate license before permitting reuse or redistribution.
+
+---
+
+**Doctor vs Vaidya** — An educational prototype for understanding and comparing medical documentation across healthcare systems.
